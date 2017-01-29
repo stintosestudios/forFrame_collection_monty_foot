@@ -26,58 +26,143 @@ scene({
     },
 
     // define some parts
-    parts : [{
-            id : 'background',
+    parts : [
 
+        /*{
+        id : 'background',
+
+        w : 480,
+        h : 360,
+        x : 0,
+        y : 0,
+
+        skin : {
+
+        appendRender : function (ctx) {
+
+        var x,
+        dx,
+        y,
+        size = 4;
+
+        ctx.strokeStyle = 'rgba(0,127,127,.6)';
+        ctx.lineWidth = 3;
+
+        // hora
+        y = 0;
+        while (y < 361) {
+
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(480, y)
+        ctx.stroke();
+
+        y += 360 / size;
+
+        }
+
+        // vert
+        x = 0;
+        while (x < 481) {
+
+        dx = 480 / size * this.percentDone;
+
+        ctx.beginPath();
+        ctx.moveTo(x + dx, 0);
+        ctx.lineTo(x + dx, 360)
+        ctx.stroke();
+
+        x += 480 / size;
+
+        }
+
+        }
+
+        }
+
+        },
+         */
+
+        // background view
+        {
+            id : 'background_view',
             w : 480,
-            h : 360,
+            h : 125,
             x : 0,
             y : 0,
 
+            forFrame : function (pt) {},
+
             skin : {
 
+                /*
+                imgIndex : 2,
+                sx : 0,
+                sy : 0,
+                sw : 1500,
+                sh : 500,
+                 */
                 appendRender : function (ctx) {
 
-                    var x,
-                    dx,
-                    y,
-                    size = 4;
+                    var pointerX = 250 - 375 * this.percentDone;
+                    var pointerSX = 1000 - 1500 * this.percentDone,
+                    scaleW = 3.84,
+                    scaleH = 2.88;
 
-                    ctx.strokeStyle = 'rgba(0,127,127,.6)';
-                    ctx.lineWidth = 3;
+                    if (pointerX > 0) {
 
-                    // hora
-                    y = 0;
-                    while (y < 361) {
+                        // part 1
+                        ctx.fillStyle = 'rgba(0,255,0,.4)';
+                        ctx.lineWidth = 3;
+                        //ctx.fillRect(pointerX, 0, 125, 125);
 
-                        ctx.beginPath();
-                        ctx.moveTo(0, y);
-                        ctx.lineTo(480, y)
-                        ctx.stroke();
+                        ctx.drawImage(this.img[2], pointerSX, 0, 500, 500, 0, 0, 125*scaleW, 125*scaleH);
+                        //ctx.fillRect(0, 145, 125, 125);
 
-                        y += 360 / size;
+                    } else {
 
-                    }
+                        // part 1
+                        ctx.fillStyle = 'rgba(0,255,0,.4)';
+                        ctx.lineWidth = 3;
+                        //ctx.fillRect(0, 0, 125 + pointerX, 125);
 
-                    // vert
-                    x = 0;
-                    while (x < 481) {
+                        ctx.drawImage(this.img[2],
+                            0,
+                            0,
+                            500 + pointerSX,
+                            500,
 
-                        dx = 480 / size * this.percentDone;
+                            Math.abs(pointerX)*scaleW,
+                            0,
+                            (125 + pointerX)*scaleW,
+                            125* scaleH);
 
-                        ctx.beginPath();
-                        ctx.moveTo(x + dx, 0);
-                        ctx.lineTo(x + dx, 360)
-                        ctx.stroke();
+                        //ctx.fillRect(0 + Math.abs(pointerX), 145, 125 + pointerX, 125);
 
-                        x += 480 / size;
+                        // part 2
+                        ctx.fillStyle = 'rgba(255,0,0,.4)';
+                        ctx.lineWidth = 3;
+                        //ctx.fillRect(375 + pointerX, 0, Math.abs(pointerX), 125);
+
+                        ctx.drawImage(this.img[2],
+
+                            1500 + pointerSX,
+                            0,
+                            Math.abs(pointerSX),
+                            500,
+
+                            0,
+                            0,
+                            Math.abs(pointerX)*scaleW,
+                            125* scaleH);
+
+                        //ctx.fillRect(0, 145, Math.abs(pointerX), 125);
 
                     }
 
                 }
 
             }
-
         },
 
         // wheel
@@ -171,7 +256,7 @@ scene({
 
             id : 'piston_shaft',
 
-            w : 32,
+            w : 64,
             h : 64,
             x : 400,
             y : 200,
@@ -198,6 +283,11 @@ scene({
 
             skin : {
 
+                imgIndex : 1,
+                sw : 93,
+                sh : 85,
+                xOffset : -15,
+
                 appendRender : function (ctx, skin) {
 
                     var pt = skin.part;
@@ -206,8 +296,8 @@ scene({
                     ctx.fillStyle = '#000000';
                     ctx.lineWidth = 3;
 
-                    ctx.strokeRect(0, 0, pt.w, pt.h);
-                    ctx.fillRect(0, 0, pt.w, pt.h);
+                    //ctx.strokeRect(0, 0, pt.w, pt.h);
+                    //ctx.fillRect(0, 0, pt.w, pt.h);
                 }
 
             }
@@ -496,7 +586,8 @@ scene.injectCanvas('apparea');
 scene.load(
     [
         '../mylogo_128.png',
-        '../../img/foot.png'
+        '../../img/foot.png',
+        '../../img/footBackground2.png'
     ],
     function (progress) {
 
@@ -507,7 +598,7 @@ scene.load(
 
             appendRender : function (ctx) {
 
-                ctx.fillStyle = 'rgba(0,255,255,.2)';
+                ctx.fillStyle = 'rgba(255,245,200,1)';
                 ctx.fillRect(0, 0, this.viewPort.w, this.viewPort.h);
 
             },
