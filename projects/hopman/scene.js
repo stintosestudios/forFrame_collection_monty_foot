@@ -3,7 +3,7 @@ scene({
 
     projectName : 'hopman',
 
-    maxFrame : 50,
+    maxFrame : 100,
 
     viewPort : {
 
