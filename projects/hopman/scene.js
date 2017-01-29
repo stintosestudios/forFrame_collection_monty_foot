@@ -116,7 +116,7 @@ scene({
                         ctx.lineWidth = 3;
                         //ctx.fillRect(pointerX, 0, 125, 125);
 
-                        ctx.drawImage(this.img[2], pointerSX, 0, 500, 500, 0, 0, 125*scaleW, 125*scaleH);
+                        ctx.drawImage(this.img[2], pointerSX, 0, 500, 500, 0, 0, 125 * scaleW, 125 * scaleH);
                         //ctx.fillRect(0, 145, 125, 125);
 
                     } else {
@@ -132,10 +132,10 @@ scene({
                             500 + pointerSX,
                             500,
 
-                            Math.abs(pointerX)*scaleW,
+                            Math.abs(pointerX) * scaleW,
                             0,
-                            (125 + pointerX)*scaleW,
-                            125* scaleH);
+                            (125 + pointerX) * scaleW,
+                            125 * scaleH);
 
                         //ctx.fillRect(0 + Math.abs(pointerX), 145, 125 + pointerX, 125);
 
@@ -153,8 +153,8 @@ scene({
 
                             0,
                             0,
-                            Math.abs(pointerX)*scaleW,
-                            125* scaleH);
+                            Math.abs(pointerX) * scaleW,
+                            125 * scaleH);
 
                         //ctx.fillRect(0, 145, Math.abs(pointerX), 125);
 
@@ -270,7 +270,7 @@ scene({
 
                 linkRadius = ptWheel.w / 7;
 
-                ptBar.w = ptWheel.w * 0.9;
+                ptBar.w = ptWheel.w * 1.3;
 
                 //pt.x = ptBar.w + ptWheel.w / 2 + ptWheel.x - linkRadius * Math.cos(Math.PI * bias);
                 //pt.y = ptWheel.y + ptWheel.h / 2 - pt.h / 2;
@@ -312,8 +312,8 @@ scene({
 
                 id : 'piston_bar',
 
-                w : 150,
-                h : 16,
+               // w : 150,
+                h : 32,
 
                 forFrame : function (pt) {
 
@@ -324,25 +324,21 @@ scene({
                     cx = ptWL.x + ptWL.w / 2,
                     cy = ptWL.y + ptWL.h / 2;
 
-                    /*
-                    theRadian = Math.atan2(
-                    cy - ptSH.y - ptSH.h / 2,
-                    cx - ptSH.x + ptSH.w / 2);
-
-                    pt.x = cx;
-                    pt.y = cy;
-                     */
-
                     theRadian = Math.atan2(
                             cy - ptSH.y - ptSH.h / 2,
                             cx - (ptSH.x + ptSH.w / 2));
 
-                    pt.x = cx + 8;
+                    pt.x = cx + 16;
                     pt.y = cy;
                 },
 
                 skin : {
 
+				
+				
+                //imgIndex : 3,
+                //sw : 404,
+                //sh : 58,
                     appendRender : function (ctx, skin) {
 
                         var pt = skin.part;
@@ -354,8 +350,9 @@ scene({
                         ctx.fillStyle = '#000000';
                         ctx.lineWidth = 3;
 
-                        ctx.strokeRect(0, 0, pt.w, pt.h);
-                        ctx.fillRect(0, 0, pt.w, pt.h);
+                        //ctx.strokeRect(0, 0, pt.w, pt.h);
+                        //ctx.fillRect(0, 0, pt.w, pt.h);
+						ctx.drawImage(this.img[3],0,0,404,58,0,0,pt.w,pt.h);
 
                     }
 
@@ -370,7 +367,7 @@ scene({
 
             id : 'left_arm',
             w : 16,
-            h : 64,
+            h : 70,
 
             forFrame : function (pt) {
 
@@ -389,6 +386,9 @@ scene({
 
             skin : {
 
+                imgIndex : 3,
+                sw : 404,
+                sh : 58,
                 appendRender : function (ctx, skin) {
 
                     var pt = skin.part;
@@ -397,49 +397,8 @@ scene({
                     ctx.fillStyle = '#000000';
                     ctx.lineWidth = 3;
 
-                    ctx.strokeRect(0, 0, pt.w, pt.h);
-                    ctx.fillRect(0, 0, pt.w, pt.h);
-
-                }
-
-            }
-
-        },
-
-        // right arm
-        {
-
-            id : 'right_arm',
-            w : 16,
-            h : 64,
-
-            forFrame : function (pt) {
-
-                var ptWheel = this.parts['piston_wheel'],
-                cx = ptWheel.x + ptWheel.w / 2 - pt.w / 2,
-                cy = ptWheel.y + ptWheel.h / 2 - pt.h / 2,
-                bias = Math.abs(.5 - this.percentDone) / .5;
-
-                var radian = Math.PI - .5 * (1 - bias);
-
-                pt.radian = Math.PI / 2 + radian;
-                pt.x = cx - Math.cos(radian) * (ptWheel.w * 0.68);
-                pt.y = cy - Math.sin(radian) * (ptWheel.h * 0.68);
-
-            },
-
-            skin : {
-
-                appendRender : function (ctx, skin) {
-
-                    var pt = skin.part;
-
-                    ctx.strokeStyle = '#00ffff';
-                    ctx.fillStyle = '#000000';
-                    ctx.lineWidth = 3;
-
-                    ctx.strokeRect(0, 0, pt.w, pt.h);
-                    ctx.fillRect(0, 0, pt.w, pt.h);
+                    //ctx.strokeRect(0, 0, pt.w, pt.h);
+                    //ctx.fillRect(0, 0, pt.w, pt.h);
 
                 }
 
@@ -483,6 +442,51 @@ scene({
                     ctx.strokeStyle = '#00ffff';
                     ctx.fillStyle = '#000000';
                     ctx.lineWidth = 3;
+
+                    //ctx.strokeRect(0, 0, pt.w, pt.h);
+                    //ctx.fillRect(0, 0, pt.w, pt.h);
+
+                }
+
+            }
+
+        },
+
+        // right arm
+        {
+
+            id : 'right_arm',
+            w : 16,
+            h : 70,
+
+            forFrame : function (pt) {
+
+                var ptWheel = this.parts['piston_wheel'],
+                cx = ptWheel.x + ptWheel.w / 2 - pt.w / 2,
+                cy = ptWheel.y + ptWheel.h / 2 - pt.h / 2,
+                bias = Math.abs(.5 - this.percentDone) / .5;
+
+                var radian = Math.PI - .5 * (1 - bias);
+
+                pt.radian = Math.PI / 2 + radian;
+                pt.x = cx - Math.cos(radian) * (ptWheel.w * 0.68);
+                pt.y = cy - Math.sin(radian) * (ptWheel.h * 0.68);
+
+            },
+
+            skin : {
+
+                imgIndex : 3,
+                sw : 404,
+                sh : 58,
+
+                appendRender : function (ctx, skin) {
+
+                    var pt = skin.part;
+
+                    ctx.strokeStyle = '#00ffff';
+                    ctx.fillStyle = '#000000';
+                    ctx.lineWidth = 1;
 
                     //ctx.strokeRect(0, 0, pt.w, pt.h);
                     //ctx.fillRect(0, 0, pt.w, pt.h);
@@ -587,7 +591,8 @@ scene.load(
     [
         '../mylogo_128.png',
         '../../img/foot.png',
-        '../../img/footBackground2.png'
+        '../../img/footBackground2.png',
+        '../../img/pipe.png'
     ],
     function (progress) {
 
